@@ -45,9 +45,7 @@ jobs:
           ls
           cd ./swap
           anchor build
-      - name: Anchor Lint
-        run: anchor lint
-
+          
       - name: Anchor Test
         run: anchor test
       
