@@ -34,7 +34,7 @@ jobs:
       - name: change dir
         run: |
          ls
-         cd ./multisig
+         cd ./swap
          ls
       
       - name: Verify Anchor CLI version
@@ -43,7 +43,7 @@ jobs:
       - name: Anchor Build
         run: |
           ls
-          cd ./multisig
+          cd ./swap
           anchor build
       - name: Anchor Lint
         run: anchor lint
@@ -53,6 +53,6 @@ jobs:
       
       - name: Anchor deploy
         run: |
-          cd ./multisig
+          cd ./swap
           anchor deploy  devnet
       
