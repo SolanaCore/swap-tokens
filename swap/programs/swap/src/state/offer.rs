@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
 #[account]
-#[derive(InitSpace, Clone)]
+#[derive(InitSpace)]
 pub struct Offer {
     bump: u8,
     proposer: Pubkey,
