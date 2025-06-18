@@ -1,5 +1,5 @@
 #[account]
-#[derive(InitSpace, Clone, Debug)]
+#[derive(InitSpace, Clone)]
 pub struct Offer {
     bump: u8,
     proposer: Pubkey,
