@@ -41,7 +41,7 @@ jobs:
 
       - name: change directory
         run: |
-          cd ./multisig
+          cd ./swap
           ls
         
       - name: Run rust-clippy
