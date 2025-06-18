@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-
+use crate::utils::transfer_token;
 #[account]
 #[derive(InitSpace)]
 pub struct Offer {
@@ -15,3 +15,7 @@ pub struct Offer {
     is_cancelled: bool,
     offer_id: u64,
 }
+
+// impl Offer {
+//     //transfer_token
+// }
