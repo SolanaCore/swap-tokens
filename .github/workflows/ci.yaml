@@ -1,0 +1,58 @@
+name: Multisig CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test-program:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Solana Environment
+        uses: DhruvWebDev/solana-setup-action@v0.0.4
+        with:
+          node-version: '20'
+          solana-cli-version: '1.18.26'
+          anchor-version: '0.31.1'
+
+      - name: Verify Solana CLI version
+        run: solana --version
+
+      - name: solana config
+        run: |
+          solana config get
+          solana config set --url devnet
+          solana-keygen new --no-bip39-passphrase
+          solana address 
+          solana airdrop 1
+          solana balance 
+
+      - name: change dir
+        run: |
+         ls
+         cd ./multisig
+         ls
+      
+      - name: Verify Anchor CLI version
+        run: anchor --version
+
+      - name: Anchor Build
+        run: |
+          ls
+          cd ./multisig
+          anchor build
+      - name: Anchor Lint
+        run: anchor lint
+
+      - name: Anchor Test
+        run: anchor test
+      
+      - name: Anchor deploy
+        run: |
+          cd ./multisig
+          anchor deploy  devnet
+      
