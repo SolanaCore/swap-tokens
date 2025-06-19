@@ -10,7 +10,7 @@ name = "swap"
 
 [features]
 default = []
-cpi = ["no-entrypoint"]
+cpi = ["no-entrypoint"]     
 no-entrypoint = []
 no-idl = []
 no-log-ix-name = []
