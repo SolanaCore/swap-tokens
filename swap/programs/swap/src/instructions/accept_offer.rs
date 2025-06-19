@@ -1,5 +1,9 @@
 use anchor_lang::prelude::*;
-
+use anchor_spl::token::{TokenAccount, Mint, Token}; // ✅ include Token
+use anchor_spl::associated_token::AssociatedToken;
+use crate::state::*;
+#[allow(unused_imports)]
+use crate::constants::ANCHOR_DISCRIMINATOR;
 /*
 signer
 pass that offer pda that he wants to accept
@@ -10,10 +14,22 @@ pass the token_account_0 and token_account_1
 pub struct AcceptOffer<'info>{
     //signer
     #[account(mut)]
-    pub reciever: signer<'info>,
+    pub reciever: Signer<'info>,
 
     #[account(mut)]
-    pub maker: SystemAccount<'info>,
+    pub proposer: SystemAccount<'info>,
+
+        //as we pass the offer pda, the seeds verify that the offer is derived from (constants, maker, offer_pda)
+    //and the has_one constraints verify that the offer pda is owned by the maker and
+    #[account(
+        mut,
+        seeds = [b"swap", proposer.key().as_ref(), offer_pda.key().as_ref()],
+        bump,
+        has_one = proposer,
+        has_one = token_0_mint,
+        has_one = token_1_mint,
+    )]
+    pub offer_pda: Box<Account<'info, Offer>>,
 
     pub token_0_mint: Box<Account<'info, Mint>>,
     pub token_1_mint: Box<Account<'info, Mint>>,
@@ -21,30 +37,21 @@ pub struct AcceptOffer<'info>{
     //the token accounts of the maker, the offer creator
     //mut because the account lamport balance will change
     #[account(
-        mut,
         init_if_needed,
+        payer = reciever,
         token::mint = token_0_mint,
-        token::authority = maker, 
+        token::authority = proposer, 
     )]
     pub token_0: Box<Account<'info, TokenAccount>>,
 
     #[account(
-        mut,
         init_if_needed,
+        payer = reciever,
         token::mint = token_1_mint,
-        token::authority = maker, 
+        token::authority = proposer, 
     )]
     pub token_1: Box<Account<'info, TokenAccount>>,
-    //as we pass the offer pda, the seeds verify that the offer is derived from (constants, maker, offer_pda)
-    //and the has_one constraints verify that the offer pda is owned by the maker and
-    #[account(
-        mut,
-        seeds = [b"swap", maker.key().as_ref(), offer_pda.key().as_ref()],
-        has_one = maker,
-        has_one = token_0_mint,
-        has_one = token_1_mint,
-    )]
-    pub offer_pda: Box<Account<'info, Offer>>,
+
 
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
@@ -52,6 +59,6 @@ pub struct AcceptOffer<'info>{
 
 }
 
-pub fn accept_offer(ctx: Context<AcceptOffer>) -> Result<()> {
+pub fn accept_offer(_ctx: &Context<AcceptOffer>) -> Result<()> {
     Ok(())
 }
