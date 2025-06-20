@@ -1,0 +1,1 @@
+//For now empty file, will be used in the future to handle inactive offers

@@ -11,7 +11,7 @@ pub use state::*;
 pub use utils::*;
 pub use error::ErrorCode;
 
-declare_id!("Y7Jsf4JuLhQk5iKPrUcRkGH7onfY5AToBRS4XFkEfdF");
+declare_id!("Swap3sqTyxNUHeUSNg5M6dmCmvsuMdRNdrqm7o2Khrt");
 
 #[program]
 pub mod swap {

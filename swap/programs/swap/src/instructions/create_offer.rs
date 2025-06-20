@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
-use anchor_spl::token::{TokenAccount, Mint, Token}; // ✅ include Token
+use anchor_spl::token::{transfer, TokenAccount, Mint, Token}; // ✅ include Token
 use anchor_spl::associated_token::AssociatedToken;
+use crate::utils::transfer_token;
 use crate::state::*;
 #[allow(unused_imports)]
 use crate::constants::ANCHOR_DISCRIMINATOR;
@@ -64,9 +65,26 @@ pub struct CreateOffer<'info> {
 }
 
 pub fn create_offer(
-    _ctx: &Context<CreateOffer>,
-    _token_0_amount: u64,
-    _token_1_amount: u64,
+    ctx: &mut Context<CreateOffer>,
+    token_0_amount: u64,
+    token_1_amount: u64,
 ) -> Result<()> {
+    /*token_0_amount: &u64, token_1_amount: &u64, token_0_mint: &Pubkey, token_1_mint: &Pubkey, proposer: &Pubkey, bump:u8*/
+    let offer = &mut ctx.accounts.offer;
+    offer.create_offer(&token_0_amount, &token_1_amount, &ctx.accounts.token_0_mint.key(),&ctx.accounts.token_1_mint.key(), &ctx.accounts.proposer.key(), ctx.bumps.offer, &ctx.accounts.token_0.key(), &ctx.accounts.token_1.key())?;
+let seeds: &[&[u8]] = &[
+    b"swap",
+    ctx.accounts.proposer.key.as_ref(),
+    &[ctx.accounts.offer.bump],
+];
+
+let signer_seeds: &[&[&[u8]]] = &[&seeds[..]]; // type: &[&[&[u8]]]
+    transfer_token(
+            ctx.accounts.token_0.to_account_info(),
+            ctx.accounts.vault_0.to_account_info(),
+            signer_seeds,
+            token_0_amount,
+            ctx.accounts.token_program.to_account_info(),
+        )?;
     Ok(())
 }
