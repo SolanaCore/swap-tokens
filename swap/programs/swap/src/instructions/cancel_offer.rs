@@ -7,12 +7,12 @@ pub struct CancelOffer<'info>{
     #[account(
         mut, 
         close = proposer,
-        seeds = [b"swap", proposer.key().as_ref(), offer_pda.key().as_ref()],
+        seeds = [b"swap", proposer.key().as_ref(), offer.key().as_ref()],
         bump,
         has_one = proposer,
 
     )]
-    pub offer_pda: Box<Account<'info, Offer>>,
+    pub offer: Box<Account<'info, Offer>>,
 
 }
 

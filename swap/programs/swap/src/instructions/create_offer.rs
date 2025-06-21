@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-use anchor_spl::token::{transfer, TokenAccount, Mint, Token}; // ✅ include Token
+use anchor_spl::token::{TokenAccount, Mint, Token}; // ✅ include Token
 use anchor_spl::associated_token::AssociatedToken;
 use crate::utils::transfer_token;
 use crate::state::*;
@@ -15,9 +15,9 @@ pub struct CreateOffer<'info> {
     // offer PDA
     #[account(
         init,
+        payer = proposer,
         seeds = [b"swap", proposer.key().as_ref()],
         bump,
-        payer = proposer,
         space = ANCHOR_DISCRIMINATOR as usize + Offer::INIT_SPACE,
     )]
     pub offer: Box<Account<'info, Offer>>,
@@ -30,31 +30,26 @@ pub struct CreateOffer<'info> {
     )]
     pub token_0: Box<Account<'info, TokenAccount>>,
 
-    #[account(
-        mut,
-        constraint = token_1.owner == proposer.key(),
-        constraint = token_1.mint == token_1_mint.key(),
-    )]
-    pub token_1: Box<Account<'info, TokenAccount>>,
-
     // mints
     pub token_0_mint: Box<Account<'info, Mint>>,
     pub token_1_mint: Box<Account<'info, Mint>>,
 
     // vaults
     #[account(
-        init,
+        init_if_needed,
         payer = proposer,
         token::mint = token_0_mint,
         token::authority = offer,
+        token::token_program = token_program,
     )]
     pub vault_0: Box<Account<'info, TokenAccount>>,
 
     #[account(
-        init,
+        init_if_needed,
         payer = proposer,
         token::mint = token_1_mint,
         token::authority = offer,
+        token::token_program = token_program,
     )]
     pub vault_1: Box<Account<'info, TokenAccount>>,
 
@@ -71,7 +66,7 @@ pub fn create_offer(
 ) -> Result<()> {
     /*token_0_amount: &u64, token_1_amount: &u64, token_0_mint: &Pubkey, token_1_mint: &Pubkey, proposer: &Pubkey, bump:u8*/
     let offer = &mut ctx.accounts.offer;
-    offer.create_offer(&token_0_amount, &token_1_amount, &ctx.accounts.token_0_mint.key(),&ctx.accounts.token_1_mint.key(), &ctx.accounts.proposer.key(), ctx.bumps.offer, &ctx.accounts.token_0.key(), &ctx.accounts.token_1.key())?;
+    offer.create_offer(&token_0_amount, &token_1_amount, &ctx.accounts.token_0_mint.key(),&ctx.accounts.token_1_mint.key(), &ctx.accounts.proposer.key(), ctx.bumps.offer)?;
 let seeds: &[&[u8]] = &[
     b"swap",
     ctx.accounts.proposer.key.as_ref(),

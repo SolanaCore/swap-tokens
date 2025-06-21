@@ -113,7 +113,7 @@ let signer_seeds: &[&[&[u8]]] = &[&seeds[..]]; // type: &[&[&[u8]]]
         ctx.accounts.vault_0.to_account_info(),
         &[],
         offer.token_0_amount,
-        ctx.accounts.token_program.to_account_info(),
+        &ctx.accounts.token_program.to_account_info(),
     )?;
 
     //VAULT -> TAKER
@@ -122,7 +122,7 @@ let signer_seeds: &[&[&[u8]]] = &[&seeds[..]]; // type: &[&[&[u8]]]
         ctx.accounts.token_1.to_account_info(),
         signer_seeds,
         offer.token_1_amount,
-        ctx.accounts.token_program.to_account_info(),
+        &ctx.accounts.token_program.to_account_info(),
     )?;
 
     //VAULT -> MAKER
@@ -131,7 +131,7 @@ let signer_seeds: &[&[&[u8]]] = &[&seeds[..]]; // type: &[&[&[u8]]]
         ctx.accounts.proposer_token_1.to_account_info(),
         signer_seeds,
         offer.token_0_amount,
-        ctx.accounts.token_program.to_account_info(),
+        &ctx.accounts.token_program.to_account_info(),
     )?;
     offer.is_fulfilled = true; // Mark the offer as fulfilled
     offer.is_active = false; // Mark the offer as inactive
