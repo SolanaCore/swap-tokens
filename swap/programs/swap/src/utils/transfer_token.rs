@@ -4,7 +4,6 @@ use anchor_lang::system_program::{transfer, Transfer};
 pub fn transfer_token<'info>(
     from: AccountInfo<'info>,
     to: AccountInfo<'info>,
-    _authority: AccountInfo<'info>,
     signer: &[&[&[u8]]],
     amount: u64,
     token_program: AccountInfo<'info>,

@@ -9,3 +9,8 @@ pub use create_offer::*;
 
 pub mod edit_offer;
 pub use edit_offer::*;
+
+#[allow(unused_imports)]
+pub mod inactive_offer;
+#[allow(unused_imports)]
+pub use inactive_offer::*;

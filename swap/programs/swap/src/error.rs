@@ -7,5 +7,7 @@ pub enum ErrorCode {
     #[msg("Invalid Owner")]
     InvalidOwner,
     #[msg("Invalid swap amount")]
-    InvalidSwapAmount
+    InvalidSwapAmount,
+    #[msg("Insufficient funds for swap")]
+    InsufficientBalance,
 }
