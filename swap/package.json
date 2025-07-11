@@ -20,5 +20,13 @@
     "prettier": "^2.6.2",
     "ts-mocha": "^10.0.0",
     "typescript": "^5.7.3"
+    "chai": "^5.2.0",
+    "mocha": "^11.7.1",
+    "ts-mocha": "^11.1.0",
+    "@types/bn.js": "^5.1.0",
+    "@types/chai": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "typescript": "^5.7.3",
+    "prettier": "^3.6.2"
   }
 }
