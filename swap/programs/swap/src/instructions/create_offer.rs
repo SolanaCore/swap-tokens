@@ -9,6 +9,7 @@ use crate::state::*;
 use crate::constants::ANCHOR_DISCRIMINATOR;
 
 #[derive(Accounts)]
+#[instruction(offer_id: u64)]
 pub struct CreateOffer<'info> {
     #[account(mut)]
     pub proposer: Signer<'info>,
@@ -16,7 +17,7 @@ pub struct CreateOffer<'info> {
     #[account(
         init,
         payer = proposer,
-        seeds = [b"swap", proposer.key().as_ref()],
+        seeds = [b"swap", proposer.key().as_ref(), offer_id.to_le_bytes().as_ref()],
         bump,
         space = ANCHOR_DISCRIMINATOR as usize + Offer::INIT_SPACE,
     )]
@@ -59,6 +60,7 @@ pub fn create_offer(
     ctx: &mut Context<CreateOffer>,
     token_0_amount: u64,
     token_1_amount: u64,
+    offer_id: u64,
 ) -> Result<()> {
     let offer = &mut ctx.accounts.offer;
     offer.create_offer(
@@ -68,12 +70,14 @@ pub fn create_offer(
         &ctx.accounts.token_1_mint.key(),
         &ctx.accounts.proposer.key(),
         ctx.bumps.offer,
+        &offer_id,
     )?;
-
-    let seeds: &[&[u8]] = &[
+      let binding = offer_id.to_le_bytes(); 
+         let seeds: &[&[u8]] = &[
         b"swap",
         ctx.accounts.proposer.key.as_ref(),
-        &[ctx.accounts.offer.bump],
+        binding.as_ref(), 
+        &[ctx.bumps.offer],
     ];
 
     let signer_seeds: &[&[&[u8]]] = &[seeds];

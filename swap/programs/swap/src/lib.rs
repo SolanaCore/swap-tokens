@@ -5,9 +5,11 @@ pub mod state;
 pub mod utils;
 use anchor_lang::prelude::*;
 
+ #[allow(unused_imports)]
  use constants::*;
  use instructions::*;
  use state::*;
+ #[allow(unused_imports)]
  use utils::*;
  use error::ErrorCode;
 
@@ -17,8 +19,8 @@ declare_id!("Swap3sqTyxNUHeUSNg5M6dmCmvsuMdRNdrqm7o2Khrt");
 pub mod swap {
     use super::*;
     
- pub fn create_offer(mut ctx: Context<CreateOffer>, token_0_amount: u64, token_1_amount: u64) -> Result<()> {
-        instructions::create_offer(&mut ctx, token_0_amount, token_1_amount)?;
+ pub fn create_offer(mut ctx: Context<CreateOffer>, token_0_amount: u64, token_1_amount: u64, offer_id:u64) -> Result<()> {
+        instructions::create_offer(&mut ctx, token_0_amount, token_1_amount, offer_id)?;
         Ok(())
     }
 

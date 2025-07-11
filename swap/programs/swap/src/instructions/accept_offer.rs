@@ -14,7 +14,7 @@ pub struct AcceptOffer<'info> {
     #[account(
         mut,
         close = proposer,
-        seeds = [b"swap", proposer.key().as_ref(), offer.key().as_ref()],
+        seeds = [b"swap", proposer.key().as_ref(), offer.offer_id.to_le_bytes().as_ref()],
         bump,
         has_one = proposer,
         has_one = token_0_mint,
@@ -84,13 +84,15 @@ pub struct AcceptOffer<'info> {
 
 pub fn accept_offer(ctx: Context<AcceptOffer>) -> Result<()> {
     let offer_acc_info = ctx.accounts.offer.to_account_info().clone(); // ✅ clone before borrow
+    let offer_acc = ctx.accounts.offer.clone();
 
     let offer = &mut ctx.accounts.offer;
-
+    let offer_id = offer_acc.offer_id.to_le_bytes();
     let seeds: &[&[u8]] = &[
         b"swap",
         ctx.accounts.proposer.key.as_ref(),
-        &[offer.bump],
+        offer_id.as_ref(), 
+        &[offer_acc.bump],
     ];
     let signer_seeds: &[&[&[u8]]] = &[seeds];
 
@@ -128,6 +130,5 @@ pub fn accept_offer(ctx: Context<AcceptOffer>) -> Result<()> {
     offer.is_fulfilled = true;
     offer.is_active = false;
     offer.is_edited = false;
-
     Ok(())
 }

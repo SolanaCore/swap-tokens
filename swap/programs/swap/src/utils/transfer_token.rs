@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-use anchor_spl::token::{self, Transfer, TransferChecked, TokenAccount, Token, Mint};
+use anchor_spl::token::{self, Transfer};
 
 pub fn transfer_token<'info>(
     from: AccountInfo<'info>,

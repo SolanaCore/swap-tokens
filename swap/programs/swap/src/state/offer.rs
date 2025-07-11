@@ -28,6 +28,7 @@ impl Offer {
         token_1_mint: &Pubkey,
         proposer: &Pubkey,
         bump: u8,
+        id: &u64,
     ) -> Result<()> {
         require!(
             *token_0_amount > 0 && *token_1_amount > 0,
@@ -46,6 +47,7 @@ impl Offer {
         self.is_edited = false;
 
         self.timestamp = Clock::get()?.unix_timestamp;
+        self.offer_id = *id;
         Ok(())
     }
 
@@ -62,9 +64,11 @@ impl Offer {
         authority: AccountInfo<'info>,
         token_program: AccountInfo<'info>,
     ) -> Result<()> {
+        let id = self.offer_id.to_le_bytes();
         let seeds = &[
             b"swap",
             self.proposer.as_ref(),
+            id.as_ref(),
             &[self.bump],
         ];
         let signer_seeds = &[&seeds[..]];
