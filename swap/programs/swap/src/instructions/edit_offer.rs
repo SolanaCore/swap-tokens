@@ -13,7 +13,7 @@ pub struct EditOffer<'info> {
     #[account(
         mut,
         close = proposer,
-        seeds = [b"swap", proposer.key().as_ref(), offer.key().as_ref()],
+        seeds = [b"swap", proposer.key().as_ref(), offer.offer_id.to_le_bytes().as_ref()],
         bump = offer.bump,
         has_one = proposer,
         constraint = offer.is_active == true,
