@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
+use anchor_spl::token::{Token, TokenAccount, Mint};
 use crate::Offer;
- use anchor_spl::token::{Token, TokenAccount, Mint}; // ✅ include Token
-//Lifetime
+
 #[derive(Accounts)]
 pub struct EditOffer<'info> {
     #[account(mut)]
@@ -11,7 +11,7 @@ pub struct EditOffer<'info> {
     pub new_token_1_mint: Box<Account<'info, Mint>>,
 
     #[account(
-        mut, 
+        mut,
         close = proposer,
         seeds = [b"swap", proposer.key().as_ref(), offer.key().as_ref()],
         bump = offer.bump,
@@ -41,8 +41,7 @@ pub struct EditOffer<'info> {
         payer = proposer,
         token::mint = new_token_0_mint,
         token::authority = proposer,
-                token::token_program = token_program,
-
+        token::token_program = token_program,
     )]
     pub new_token_0: Box<Account<'info, TokenAccount>>,
 
@@ -51,8 +50,7 @@ pub struct EditOffer<'info> {
         payer = proposer,
         token::mint = new_token_0_mint,
         token::authority = offer,
-                token::token_program = token_program,
-
+        token::token_program = token_program,
     )]
     pub new_vault_0: Box<Account<'info, TokenAccount>>,
 
@@ -62,17 +60,28 @@ pub struct EditOffer<'info> {
     pub rent: Sysvar<'info, Rent>,
 }
 
-/*
+pub fn edit_offer(
+    ctx: &mut Context<EditOffer>,
+    token_0_amount: u64,
+    token_1_amount: u64,
+) -> Result<()> {
 
-token_0_amount: u64,
-    token_1_amount: u64, 
-    token_0_mint: Pubkey,
-    token_1_mint: Pubkey,
+    let offer_acc_info = ctx.accounts.offer.to_account_info().clone(); // ✅ clone before borrow
 
-*/
-pub fn edit_offer(ctx: &mut Context<EditOffer>,token_0_amount: u64, token_1_amount: u64) -> Result<()> {
     let offer = &mut ctx.accounts.offer;
-    //old_vault_0:AccountInfo<'_>, old_token_0: AccountInfo<'_>, new_token_0: AccountInfo<'_>, new_vault_0: AccountInfo<'_>)
-    offer.edit_offer(token_0_amount, token_1_amount, &ctx.accounts.new_token_0_mint.key(), &ctx.accounts.new_token_1_mint.key(), ctx.accounts.old_vault_0.to_account_info(), ctx.accounts.old_token_0.to_account_info(), ctx.accounts.new_vault_0.to_account_info(), ctx.accounts.new_token_0.to_account_info(), ctx.accounts.token_program.to_account_info())?;
+
+    offer.edit_offer(
+        token_0_amount,
+        token_1_amount,
+        &ctx.accounts.new_token_0_mint.key(),
+        &ctx.accounts.new_token_1_mint.key(),
+        ctx.accounts.old_vault_0.to_account_info(),
+        ctx.accounts.old_token_0.to_account_info(),
+        ctx.accounts.new_vault_0.to_account_info(),
+        ctx.accounts.new_token_0.to_account_info(),
+         offer_acc_info,
+        ctx.accounts.token_program.to_account_info(),
+    )?;
+
     Ok(())
 }
