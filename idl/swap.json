@@ -1,396 +1,235 @@
-{
-  "address": "Swap3sqTyxNUHeUSNg5M6dmCmvsuMdRNdrqm7o2Khrt",
-  "metadata": {
-    "name": "swap",
-    "version": "0.0.1",
-    "spec": "0.1.0",
-    "description": "Created with Anchor"
-  },
-  "instructions": [
-    {
-      "name": "accept_offer",
-      "discriminator": [
-        227,
-        82,
-        234,
-        131,
-        1,
-        18,
-        48,
-        2
-      ],
-      "accounts": [
-        {
-          "name": "reciever",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "proposer",
-          "relations": [
-            "offer"
-          ]
-        },
-        {
-          "name": "offer",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  119,
-                  97,
-                  112
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "proposer"
-              },
-              {
-                "kind": "account",
-                "path": "offer.offer_id",
-                "account": "Offer"
-              }
-            ]
-          }
-        },
-        {
-          "name": "token_0_mint",
-          "relations": [
-            "offer"
-          ]
-        },
-        {
-          "name": "token_1_mint",
-          "relations": [
-            "offer"
-          ]
-        },
-        {
-          "name": "token_0",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "token_1",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "vault_0",
-          "writable": true
-        },
-        {
-          "name": "vault_1",
-          "writable": true
-        },
-        {
-          "name": "proposer_token_1",
-          "writable": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        },
-        {
-          "name": "token_program"
-        },
-        {
-          "name": "associated_token_program",
-          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
-        }
-      ],
-      "args": []
+  {
+    "address": "Swap3sqTyxNUHeUSNg5M6dmCmvsuMdRNdrqm7o2Khrt",
+    "metadata": {
+      "name": "swap",
+      "version": "0.0.1",
+      "spec": "0.1.0",
+      "description": "Created with Anchor"
     },
-    {
-      "name": "cancel_offer",
-      "discriminator": [
-        92,
-        203,
-        223,
-        40,
-        92,
-        89,
-        53,
-        119
-      ],
-      "accounts": [
-        {
-          "name": "proposer",
-          "signer": true,
-          "relations": [
-            "offer"
-          ]
-        },
-        {
-          "name": "offer",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  119,
-                  97,
-                  112
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "proposer"
-              },
-              {
-                "kind": "account",
-                "path": "offer.offer_id",
-                "account": "Offer"
-              }
-            ]
-          }
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "create_offer",
-      "discriminator": [
-        237,
-        233,
-        192,
-        168,
-        248,
-        7,
-        249,
-        241
-      ],
-      "accounts": [
-        {
-          "name": "proposer",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "offer",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  119,
-                  97,
-                  112
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "proposer"
-              },
-              {
-                "kind": "arg",
-                "path": "offer_id"
-              }
-            ]
-          }
-        },
-        {
-          "name": "token_0",
-          "writable": true
-        },
-        {
-          "name": "token_0_mint"
-        },
-        {
-          "name": "token_1_mint"
-        },
-        {
-          "name": "vault_0",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "vault_1",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        },
-        {
-          "name": "token_program"
-        },
-        {
-          "name": "associated_token_program",
-          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
-        }
-      ],
-      "args": [
-        {
-          "name": "token_0_amount",
-          "type": "u64"
-        },
-        {
-          "name": "token_1_amount",
-          "type": "u64"
-        },
-        {
-          "name": "offer_id",
-          "type": "u64"
-        }
-      ]
-    },
-    {
-      "name": "edit_offer",
-      "discriminator": [
-        49,
-        95,
-        219,
-        104,
-        73,
-        133,
-        159,
-        178
-      ],
-      "accounts": [
-        {
-          "name": "proposer",
-          "writable": true,
-          "signer": true,
-          "relations": [
-            "offer"
-          ]
-        },
-        {
-          "name": "new_token_0_mint"
-        },
-        {
-          "name": "new_token_1_mint"
-        },
-        {
-          "name": "offer",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  119,
-                  97,
-                  112
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "proposer"
-              },
-              {
-                "kind": "account",
-                "path": "offer.offer_id",
-                "account": "Offer"
-              }
-            ]
-          }
-        },
-        {
-          "name": "old_vault_0",
-          "writable": true
-        },
-        {
-          "name": "old_token_0",
-          "writable": true
-        },
-        {
-          "name": "new_token_0",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "new_vault_0",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        },
-        {
-          "name": "token_program",
-          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-        },
-        {
-          "name": "rent",
-          "address": "SysvarRent111111111111111111111111111111111"
-        }
-      ],
-      "args": [
-        {
-          "name": "token_0_amount",
-          "type": "u64"
-        },
-        {
-          "name": "token_1_amount",
-          "type": "u64"
-        }
-      ]
-    }
-  ],
-  "accounts": [
-    {
-      "name": "Offer",
-      "discriminator": [
-        215,
-        88,
-        60,
-        71,
-        170,
-        162,
-        73,
-        229
-      ]
-    }
-  ],
-  "errors": [
-    {
-      "code": 6000,
-      "name": "TxAlreadyEditedOnce",
-      "msg": "Transaction has already edited once"
-    },
-    {
-      "code": 6001,
-      "name": "InvalidOwner",
-      "msg": "Invalid Owner"
-    },
-    {
-      "code": 6002,
-      "name": "InvalidSwapAmount",
-      "msg": "Invalid swap amount"
-    },
-    {
-      "code": 6003,
-      "name": "InsufficientBalance",
-      "msg": "Insufficient funds for swap"
-    }
-  ],
-  "types": [
-    {
-      "name": "Offer",
-      "type": {
-        "kind": "struct",
-        "fields": [
+    "instructions": [
+      {
+        "name": "accept_offer",
+        "discriminator": [
+          227,
+          82,
+          234,
+          131,
+          1,
+          18,
+          48,
+          2
+        ],
+        "accounts": [
           {
-            "name": "bump",
-            "type": "u8"
+            "name": "reciever",
+            "writable": true,
+            "signer": true
           },
           {
             "name": "proposer",
-            "type": "pubkey"
+            "relations": [
+              "offer"
+            ]
           },
+          {
+            "name": "offer",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    115,
+                    119,
+                    97,
+                    112
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "proposer"
+                },
+                {
+                  "kind": "account",
+                  "path": "offer.offer_id",
+                  "account": "Offer"
+                }
+              ]
+            }
+          },
+          {
+            "name": "token_0_mint",
+            "relations": [
+              "offer"
+            ]
+          },
+          {
+            "name": "token_1_mint",
+            "relations": [
+              "offer"
+            ]
+          },
+          {
+            "name": "token_0",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "token_1",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "vault_0",
+            "writable": true
+          },
+          {
+            "name": "vault_1",
+            "writable": true
+          },
+          {
+            "name": "proposer_token_1",
+            "writable": true
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "token_program"
+          },
+          {
+            "name": "associated_token_program",
+            "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          }
+        ],
+        "args": []
+      },
+      {
+        "name": "cancel_offer",
+        "discriminator": [
+          92,
+          203,
+          223,
+          40,
+          92,
+          89,
+          53,
+          119
+        ],
+        "accounts": [
+          {
+            "name": "proposer",
+            "signer": true,
+            "relations": [
+              "offer"
+            ]
+          },
+          {
+            "name": "offer",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    115,
+                    119,
+                    97,
+                    112
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "proposer"
+                },
+                {
+                  "kind": "account",
+                  "path": "offer.offer_id",
+                  "account": "Offer"
+                }
+              ]
+            }
+          }
+        ],
+        "args": []
+      },
+      {
+        "name": "create_offer",
+        "discriminator": [
+          237,
+          233,
+          192,
+          168,
+          248,
+          7,
+          249,
+          241
+        ],
+        "accounts": [
+          {
+            "name": "proposer",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "offer",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    115,
+                    119,
+                    97,
+                    112
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "proposer"
+                },
+                {
+                  "kind": "arg",
+                  "path": "offer_id"
+                }
+              ]
+            }
+          },
+          {
+            "name": "token_0",
+            "writable": true
+          },
+          {
+            "name": "token_0_mint"
+          },
+          {
+            "name": "token_1_mint"
+          },
+          {
+            "name": "vault_0",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "vault_1",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "token_program"
+          },
+          {
+            "name": "associated_token_program",
+            "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+          }
+        ],
+        "args": [
           {
             "name": "token_0_amount",
             "type": "u64"
@@ -400,42 +239,203 @@
             "type": "u64"
           },
           {
-            "name": "token_0_mint",
-            "type": "pubkey"
-          },
-          {
-            "name": "token_1_mint",
-            "type": "pubkey"
-          },
-          {
-            "name": "timestamp",
-            "type": "i64"
-          },
-          {
-            "name": "is_active",
-            "type": "bool"
-          },
-          {
-            "name": "is_fulfilled",
-            "type": "bool"
-          },
-          {
-            "name": "is_edited",
-            "type": "bool"
-          },
-          {
             "name": "offer_id",
             "type": "u64"
           }
         ]
+      },
+      {
+        "name": "edit_offer",
+        "discriminator": [
+          49,
+          95,
+          219,
+          104,
+          73,
+          133,
+          159,
+          178
+        ],
+        "accounts": [
+          {
+            "name": "proposer",
+            "writable": true,
+            "signer": true,
+            "relations": [
+              "offer"
+            ]
+          },
+          {
+            "name": "new_token_0_mint"
+          },
+          {
+            "name": "new_token_1_mint"
+          },
+          {
+            "name": "offer",
+            "writable": true,
+            "pda": {
+              "seeds": [
+                {
+                  "kind": "const",
+                  "value": [
+                    115,
+                    119,
+                    97,
+                    112
+                  ]
+                },
+                {
+                  "kind": "account",
+                  "path": "proposer"
+                },
+                {
+                  "kind": "account",
+                  "path": "offer.offer_id",
+                  "account": "Offer"
+                }
+              ]
+            }
+          },
+          {
+            "name": "old_vault_0",
+            "writable": true
+          },
+          {
+            "name": "old_token_0",
+            "writable": true
+          },
+          {
+            "name": "new_token_0",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "new_vault_0",
+            "writable": true,
+            "signer": true
+          },
+          {
+            "name": "system_program",
+            "address": "11111111111111111111111111111111"
+          },
+          {
+            "name": "token_program",
+            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          },
+          {
+            "name": "rent",
+            "address": "SysvarRent111111111111111111111111111111111"
+          }
+        ],
+        "args": [
+          {
+            "name": "token_0_amount",
+            "type": "u64"
+          },
+          {
+            "name": "token_1_amount",
+            "type": "u64"
+          }
+        ]
       }
-    }
-  ],
-  "constants": [
-    {
-      "name": "ANCHOR_DISCRIMINATOR",
-      "type": "u8",
-      "value": "8"
-    }
-  ]
-}
+    ],
+    "accounts": [
+      {
+        "name": "Offer",
+        "discriminator": [
+          215,
+          88,
+          60,
+          71,
+          170,
+          162,
+          73,
+          229
+        ]
+      }
+    ],
+    "errors": [
+      {
+        "code": 6000,
+        "name": "TxAlreadyEditedOnce",
+        "msg": "Transaction has already edited once"
+      },
+      {
+        "code": 6001,
+        "name": "InvalidOwner",
+        "msg": "Invalid Owner"
+      },
+      {
+        "code": 6002,
+        "name": "InvalidSwapAmount",
+        "msg": "Invalid swap amount"
+      },
+      {
+        "code": 6003,
+        "name": "InsufficientBalance",
+        "msg": "Insufficient funds for swap"
+      }
+    ],
+    "types": [
+      {
+        "name": "Offer",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "bump",
+              "type": "u8"
+            },
+            {
+              "name": "proposer",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_0_amount",
+              "type": "u64"
+            },
+            {
+              "name": "token_1_amount",
+              "type": "u64"
+            },
+            {
+              "name": "token_0_mint",
+              "type": "pubkey"
+            },
+            {
+              "name": "token_1_mint",
+              "type": "pubkey"
+            },
+            {
+              "name": "timestamp",
+              "type": "i64"
+            },
+            {
+              "name": "is_active",
+              "type": "bool"
+            },
+            {
+              "name": "is_fulfilled",
+              "type": "bool"
+            },
+            {
+              "name": "is_edited",
+              "type": "bool"
+            },
+            {
+              "name": "offer_id",
+              "type": "u64"
+            }
+          ]
+        }
+      }
+    ],
+    "constants": [
+      {
+        "name": "ANCHOR_DISCRIMINATOR",
+        "type": "u8",
+        "value": "8"
+      }
+    ]
+  }

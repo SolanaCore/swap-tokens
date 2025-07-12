@@ -13,7 +13,7 @@ fn test_initialize() {
 
     let instruction = Instruction::new_with_bytes(
         program_id,
-        &swap::instruction::Initialize {}.data(),
+        &swap::instruction:: {}.data(),
         swap::accounts::Initialize {}.to_account_metas(None),
     );
 

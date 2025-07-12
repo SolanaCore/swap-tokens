@@ -13,18 +13,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Solana Environment
-        uses: DhruvWebDev/solana-setup-action@v0.0.4
+        uses: DhruvWebDev/solana-setup-action@v0.0.7
         with:
           node-version: '20'
           solana-cli-version: '1.18.26'
           anchor-version: '0.31.1'
-
-      - name: Run x-ray analysis
-        run: |
-          docker run --rm \
-            --volume "${{ github.workspace }}/swap:/project" \
-            ghcr.io/sec3-product/x-ray:latest \
-            /project
+          x-ray-enabled: true
+          working-directory: swap
 
       - name: Verify Solana CLI version
         run: solana --version
@@ -37,27 +32,23 @@ jobs:
           solana address 
           solana airdrop 1
           solana balance 
-
-      - name: change dir
-        run: |
-         ls
-         cd ./swap
-         ls
       
       - name: Verify Anchor CLI version
         run: anchor --version
 
       - name: Anchor Build
-        run: |
-          ls
-          cd ./swap
-          anchor build
-          
+        run: anchor build
+        working-directory: swap
+        
+      - name: Install npm packages
+        run: npm install
+        working-directory: swap
+        
       - name: Anchor Test
         run: anchor test
+        working-directory: swap
       
       - name: Anchor deploy
-        run: |
-          cd ./swap
-          anchor deploy  devnet
+        run: anchor deploy  devnet
+        working-directory: swap
       

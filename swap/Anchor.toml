@@ -4,9 +4,10 @@ package_manager = "npm"
 [features]
 resolution = true
 skip-lint = false
+seeds = true
 
 [programs.localnet]
-swap = "Y7Jsf4JuLhQk5iKPrUcRkGH7onfY5AToBRS4XFkEfdF"
+swap = "67Hi9cdvL7f4LcoxRBTMeYT6RQaoK6At42wWqbqd5ygd"
 
 [registry]
 url = "https://api.apr.dev"
@@ -18,3 +19,4 @@ wallet = "~/.config/solana/id.json"
 [scripts]
 test-sbf = "cargo test-sbf"
 test = "npm run test"
+
