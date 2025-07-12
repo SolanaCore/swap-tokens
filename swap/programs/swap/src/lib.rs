@@ -13,7 +13,7 @@ use anchor_lang::prelude::*;
  use utils::*;
  use error::ErrorCode;
 
-declare_id!("Swap3sqTyxNUHeUSNg5M6dmCmvsuMdRNdrqm7o2Khrt");
+declare_id!("67Hi9cdvL7f4LcoxRBTMeYT6RQaoK6At42wWqbqd5ygd");
 
 #[program]
 pub mod swap {
