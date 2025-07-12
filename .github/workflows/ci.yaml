@@ -21,13 +21,6 @@ jobs:
           x-ray-enabled: true
           working-directory: swap
 
-      - name: Run x-ray analysis
-        run: |
-          docker run --rm \
-            --volume "${{ github.workspace }}/swap:/project" \
-            ghcr.io/sec3-product/x-ray:latest \
-            /project
-
       - name: Verify Solana CLI version
         run: solana --version
 
