@@ -34,7 +34,7 @@
         pub token_1_mint: Box<InterfaceAccount<'info, Mint>>,
 
         #[account(
-            init,
+            init_if_needed,
             payer = proposer,
             associated_token::mint = token_0_mint,
             associated_token::authority = offer,
@@ -43,7 +43,7 @@
         pub vault_0: Box<InterfaceAccount<'info, TokenAccount>>,
 
         #[account(
-            init,
+            init_if_needed,
             payer = proposer,
             associated_token::mint = token_1_mint,
             associated_token::authority = offer,
@@ -72,21 +72,22 @@
             ctx.bumps.offer,
             &offer_id,
         )?;
-        let binding = offer_id.to_le_bytes(); 
-            let seeds: &[&[u8]] = &[
-            b"offer",
-            ctx.accounts.proposer.key.as_ref(),
-            binding.as_ref(), 
-            &[ctx.bumps.offer],
-        ];
+        
+        // let binding = offer_id.to_le_bytes(); 
+        //     let seeds: &[&[u8]] = &[
+        //     b"offer",
+        //     ctx.accounts.proposer.key.as_ref(),
+        //     binding.as_ref(), 
+        //     &[ctx.bumps.offer],
+        // ];
 
-        let signer_seeds: &[&[&[u8]]] = &[seeds];
+        // let signer_seeds: &[&[&[u8]]] = &[seeds];
 
         transfer_token(
             ctx.accounts.token_0.to_account_info(),
             ctx.accounts.vault_0.to_account_info(),
             ctx.accounts.proposer.to_account_info(),
-            signer_seeds,
+            &[],
             token_0_amount,
             ctx.accounts.token_program.to_account_info(),
         )?;

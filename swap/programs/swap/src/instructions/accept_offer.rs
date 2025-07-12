@@ -14,7 +14,7 @@ pub struct AcceptOffer<'info> {
     #[account(
         mut,
         close = proposer,
-        seeds = [b"swap", proposer.key().as_ref(), &offer_id.to_le_bytes()],
+        seeds = [b"swap", proposer.key().as_ref(), offer_id.to_le_bytes().as_ref()],
         bump,
         has_one = proposer,
         has_one = token_0_mint,

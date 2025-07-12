@@ -19,7 +19,10 @@ declare_id!("67Hi9cdvL7f4LcoxRBTMeYT6RQaoK6At42wWqbqd5ygd");
 pub mod swap {
     use super::*;
     
- pub fn create_offer(mut ctx: Context<CreateOffer>, token_0_amount: u64, token_1_amount: u64, offer_id:u64) -> Result<()> {
+ pub fn create_offer(mut ctx: Context<CreateOffer>,  offer_id:u64, token_0_amount: u64, token_1_amount: u64) -> Result<()> {
+        msg!{
+            "offer_id: {}", offer_id
+        }
         instructions::create_offer(&mut ctx, token_0_amount, token_1_amount, offer_id)?;
         Ok(())
     }
